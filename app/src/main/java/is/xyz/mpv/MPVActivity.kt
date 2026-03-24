@@ -705,9 +705,7 @@ class MPVActivity : AppCompatActivity(), MPVLib.EventObserver, TouchGesturesObse
                 binding.statsTextView.visibility = View.VISIBLE
             }
 
-            val insetsController = WindowCompat.getInsetsController(window, window.decorView)
-            insetsController.show(WindowInsetsCompat.Type.navigationBars())
-            // Clear legacy immersive flags so system bars can appear with controls
+            // Show system bars with controls
             @Suppress("DEPRECATION")
             window.decorView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
@@ -730,12 +728,7 @@ class MPVActivity : AppCompatActivity(), MPVLib.EventObserver, TouchGesturesObse
         binding.topControls.visibility = View.GONE
         binding.statsTextView.visibility = View.GONE
 
-        // New API
-        val insetsController = WindowCompat.getInsetsController(window, window.decorView)
-        insetsController.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        insetsController.hide(WindowInsetsCompat.Type.systemBars())
-        // Legacy API as fallback — more reliable on Android 11
+        // Legacy immersive mode — reliable on Android 11
         @Suppress("DEPRECATION")
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
